@@ -42,6 +42,12 @@ public class UserServlet extends HttpServlet {
                 case "/editUser":
                     showEditForm(request, response);
                     break;
+                case "/updateUser":
+                    updateUser(request, response);
+                    break;
+                case "/deleteUser":
+                    deleteUser(request, response);
+                    break;
                 default:
                     listUsers(request, response);
             }
@@ -50,14 +56,6 @@ public class UserServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    private void listUsers(HttpServletRequest request, HttpServletResponse response)
-        throws SQLException, IOException, ServletException {
-        List<User> listUsers = userDao.getAllUsers();
-        request.setAttribute("listUsers", listUsers);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
-        dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
@@ -89,8 +87,46 @@ public class UserServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int idUser = Integer.parseInt(request.getParameter("id"));
-        
+        User current_user = userDao.getUserById(idUser);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
+        request.setAttribute("user", current_user);
+        dispatcher.forward(request, response);
+    }
+
+    private void updateUser(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ParseException {
+        int idUser = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        String date_of_birth = request.getParameter("date_of_birth");
+        String fiscal_code = request.getParameter("fiscal_code");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        fiscal_code = fiscal_code.toUpperCase();
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = sd.parse(date_of_birth);
+        java.sql.Date sqlDate = new java.sql.Date(date1.getTime());
+
+        User current_user = new User(idUser, name, surname, sqlDate, fiscal_code, false, username, password);
+
+        userDao.updateUser(current_user);
+        response.sendRedirect("admin-homepage");
+
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        int idUser = Integer.parseInt(request.getParameter("id"));
+        userDao.deleteUser(idUser);
+        response.sendRedirect("admin-homepage");
+    }
+
+    private void listUsers(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        List<User> listUsers = userDao.getAllUsers();
+        request.setAttribute("listUsers", listUsers);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
         dispatcher.forward(request, response);
     }
 }

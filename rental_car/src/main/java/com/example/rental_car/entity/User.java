@@ -50,6 +50,17 @@ public class User {
         this.password = password;
     }
 
+    public User(int id, String name, String surname, Date date_of_birth, String fiscal_code, Boolean super_user, String username, String password) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.date_of_birth = date_of_birth;
+        this.fiscal_code = fiscal_code;
+        this.super_user = super_user;
+        this.username = username;
+        this.password = password;
+    }
+
     public int getId() {
         return id;
     }

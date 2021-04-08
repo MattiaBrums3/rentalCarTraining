@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Nuovo Utente</title>
@@ -41,13 +42,13 @@
             <tr>
                 <th>Data di Nascita: </th>
                 <td>
-                    <input type="date" name="date_of_birth" value="<c:out value='${user.dateOfBirth}' />" required />
+                    <input type="date" name="date_of_birth" value="<fmt:formatDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd" />" required />
                 </td>
             </tr>
             <tr>
                 <th>Codice Fiscale: </th>
                 <td>
-                    <input type="text" name="fiscal_code" maxlength="16" style="text-transform:uppercase" value="<c:out value='${user.fiscalCode}' />" required />
+                    <input type="text" name="fiscal_code" maxlength="16" minlenght="16" style="text-transform:uppercase" value="<c:out value='${user.fiscalCode}' />" required />
                 </td>
             </tr>
             <tr>
@@ -59,12 +60,17 @@
             <tr>
                 <th>Password: </th>
                 <td>
-                    <input type="text" name="password" value="<c:out value='${user.password}' />" required />
+                    <input type="password" name="password" value="<c:out value='${user.password}' />" required />
                 </td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                    <input type="submit" value="Inserisci" />
+                    <c:if test="${user != null}">
+                        <input type="submit" value="Modifica" />
+                    </c:if>
+                    <c:if test="${user == null}">
+                        <input type="submit" value="Inserisci" />
+                    </c:if>
                 </td>
             </tr>
         </table>
