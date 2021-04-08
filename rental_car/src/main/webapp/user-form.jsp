@@ -6,6 +6,7 @@
     <title>Nuovo Utente</title>
 </head>
 <body>
+    <jsp:include page="header.jsp"/>
     <div align="center">
         <c:if test="${user != null}">
             <form action="updateUser" method="post">

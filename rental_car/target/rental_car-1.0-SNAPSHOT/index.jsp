@@ -8,6 +8,6 @@
 <h1><%= "WELCOME TO RENTAL CAR" %>
 </h1>
 <br/>
-<a href="admin-homepage">Go to Admin Page</a>
+<a href="user">Go to Admin Page</a>
 </body>
 </html>

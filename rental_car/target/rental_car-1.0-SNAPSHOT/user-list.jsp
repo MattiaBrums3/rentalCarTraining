@@ -2,13 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<head>
-    <title>Admin</title>
-</head>
 <body>
-    <div align="center">
-        <h1>Admin Homepage</h1>
-    </div>
     <div align="center">
         <table border="1" cellpadding="5">
             <caption><h2>Lista Utenti</h2></caption>

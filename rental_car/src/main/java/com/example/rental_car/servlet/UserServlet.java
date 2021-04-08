@@ -9,12 +9,11 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Locale;
 
 import com.example.rental_car.dao.UserDao;
 import com.example.rental_car.entity.User;
 
-@WebServlet(name = "UserServlet", value = "/")
+@WebServlet(name = "UserServlet", urlPatterns = {"/user", "/newUser", "/insertUser", "/editUser", "/updateUser", "/deleteUser"})
 public class UserServlet extends HttpServlet {
     private UserDao userDao;
 
@@ -50,6 +49,7 @@ public class UserServlet extends HttpServlet {
                     break;
                 default:
                     listUsers(request, response);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -81,7 +81,7 @@ public class UserServlet extends HttpServlet {
         User new_user = new User(name, surname, sqlDate, fiscal_code, false, username, password);
 
         userDao.saveUser(new_user);
-        response.sendRedirect("admin-homepage");
+        response.sendRedirect("user");
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
@@ -111,7 +111,7 @@ public class UserServlet extends HttpServlet {
         User current_user = new User(idUser, name, surname, sqlDate, fiscal_code, false, username, password);
 
         userDao.updateUser(current_user);
-        response.sendRedirect("admin-homepage");
+        response.sendRedirect("user");
 
     }
 
@@ -119,14 +119,14 @@ public class UserServlet extends HttpServlet {
             throws SQLException, IOException {
         int idUser = Integer.parseInt(request.getParameter("id"));
         userDao.deleteUser(idUser);
-        response.sendRedirect("admin-homepage");
+        response.sendRedirect("user");
     }
 
     private void listUsers(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         List<User> listUsers = userDao.getAllUsers();
         request.setAttribute("listUsers", listUsers);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin-homepage.jsp");
         dispatcher.forward(request, response);
     }
 }

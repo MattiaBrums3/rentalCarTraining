@@ -127,6 +127,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", dateOfBirth=" + date_of_birth + ", fiscalCode=" + fiscal_code + ", superUser=" + super_user + ", password=" + password + "]";
+        return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", dateOfBirth=" + date_of_birth + ", fiscalCode=" + fiscal_code + ", superUser=" + super_user + ", username=" + username + ", password=" + password + "]";
     }
 }
