@@ -28,7 +28,19 @@ public class CategoryServlet extends HttpServlet {
         try {
             switch (path) {
                 case "/newCategory":
-                    //ripartire da qui
+                    showCategoryForm(request, response, "insert");
+                    break;
+                case "/insertCategory":
+                    insertEditCategory(request, response, "insert");
+                    break;
+                case "/editCategory":
+                    showCategoryForm(request, response, "update");
+                    break;
+                case "/updateCategory":
+                    insertEditCategory(request, response, "update");
+                    break;
+                case "/deleteCategory":
+                    deleteCategory(request, response);
                     break;
                 default:
                     listCategories(request, response);
@@ -37,6 +49,40 @@ public class CategoryServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void showCategoryForm(HttpServletRequest request, HttpServletResponse response, String action)
+            throws ServletException, IOException {
+        if (action == "update") {
+            int idCategory = Integer.parseInt(request.getParameter("id"));
+            Category current_category = categoryDao.getCategoryById(idCategory);
+            request.setAttribute("category", current_category);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("category-form.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void insertEditCategory(HttpServletRequest request, HttpServletResponse response, String action)
+            throws SQLException, IOException {
+        String typology = request.getParameter("typology");
+
+        if (action == "insert") {
+            Category new_category = new Category(typology);
+            categoryDao.saveCategory(new_category);
+        } else if (action == "update") {
+            int idCategory = Integer.parseInt(request.getParameter("id"));
+            Category current_category = new Category(idCategory, typology);
+            categoryDao.updateCategory(current_category);
+        }
+
+        response.sendRedirect("category");
+    }
+
+    private void deleteCategory(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        int idCategory = Integer.parseInt(request.getParameter("id"));
+        categoryDao.deleteCategory(idCategory);
+        response.sendRedirect("category");
     }
 
     private void listCategories(HttpServletRequest request, HttpServletResponse response)

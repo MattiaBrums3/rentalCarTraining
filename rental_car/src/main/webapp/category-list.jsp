@@ -17,9 +17,9 @@
                     <td><c:out value="${category.id}" /></td>
                     <td><c:out value="${category.typology}" /></td>
                     <td>
-                        <a href="editCategory?id=<c:out value='${user.id}' />">Modifica</a>
+                        <a href="editCategory?id=<c:out value='${category.id}' />">Modifica</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="deleteCategory?id=<c:out value='${user.id}' />">Elimina</a>
+                        <a href="deleteCategory?id=<c:out value='${category.id}' />">Elimina</a>
                     </td>
                 </tr>
             </c:forEach>

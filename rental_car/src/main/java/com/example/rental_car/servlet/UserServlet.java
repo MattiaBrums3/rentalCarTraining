@@ -33,13 +33,13 @@ public class UserServlet extends HttpServlet {
         try {
             switch (path) {
                 case "/newUser":
-                    showNewForm(request, response);
+                    showUserForm(request, response, "insert");
                     break;
                 case "/insertUser":
                     insertEditUser(request, response, "insert");
                     break;
                 case "/editUser":
-                    showEditForm(request, response);
+                    showUserForm(request, response, "update");
                     break;
                 case "/updateUser":
                     insertEditUser(request, response, "update");
@@ -58,8 +58,13 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void showNewForm(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    private void showUserForm(HttpServletRequest request, HttpServletResponse response, String action)
+            throws SQLException, ServletException, IOException {
+        if (action == "update") {
+            int idUser = Integer.parseInt(request.getParameter("id"));
+            User current_user = userDao.getUserById(idUser);
+            request.setAttribute("user", current_user);
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
         dispatcher.forward(request, response);
     }
@@ -88,15 +93,6 @@ public class UserServlet extends HttpServlet {
         }
 
         response.sendRedirect("user");
-    }
-
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, ServletException, IOException {
-        int idUser = Integer.parseInt(request.getParameter("id"));
-        User current_user = userDao.getUserById(idUser);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
-        request.setAttribute("user", current_user);
-        dispatcher.forward(request, response);
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)

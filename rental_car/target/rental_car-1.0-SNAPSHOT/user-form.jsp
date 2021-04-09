@@ -3,7 +3,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Nuovo Utente</title>
+    <c:if test="${user != null}">
+        <title>Modifica Utente</title>
+    </c:if>
+    <c:if test="${user == null}">
+        <title>Nuovo Utente</title>
+    </c:if>
 </head>
 <body>
     <jsp:include page="header.jsp"/>
