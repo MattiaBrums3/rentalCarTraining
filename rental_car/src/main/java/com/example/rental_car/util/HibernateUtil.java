@@ -10,6 +10,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import com.example.rental_car.entity.User;
 import com.example.rental_car.entity.Category;
+import com.example.rental_car.entity.Vehicle;
 
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
@@ -36,6 +37,7 @@ public class HibernateUtil {
 
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(Category.class);
+                configuration.addAnnotatedClass(Vehicle.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

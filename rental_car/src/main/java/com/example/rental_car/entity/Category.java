@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Table(name = "cateogries")
@@ -17,6 +19,9 @@ public class Category {
 
     @Column(name = "typology")
     private String typology;
+
+    @OneToMany(mappedBy="category")
+    private List<Vehicle> vehicles;
 
     public Category() {}
 
@@ -44,6 +49,10 @@ public class Category {
     public void setTypology(String typology) {
         this.typology = typology;
     }
+
+    public List<Vehicle> getVehicles() { return vehicles; }
+
+    public void setVehicles(List<Vehicle> vehicles) { this.vehicles = vehicles; }
 
     @Override
     public String toString() {
