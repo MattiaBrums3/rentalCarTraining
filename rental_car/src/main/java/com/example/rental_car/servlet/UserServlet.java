@@ -36,13 +36,13 @@ public class UserServlet extends HttpServlet {
                     showNewForm(request, response);
                     break;
                 case "/insertUser":
-                    insertUser(request, response);
+                    insertEditUser(request, response, "insert");
                     break;
                 case "/editUser":
                     showEditForm(request, response);
                     break;
                 case "/updateUser":
-                    updateUser(request, response);
+                    insertEditUser(request, response, "update");
                     break;
                 case "/deleteUser":
                     deleteUser(request, response);
@@ -64,7 +64,7 @@ public class UserServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void insertUser(HttpServletRequest request, HttpServletResponse response)
+    private void insertEditUser(HttpServletRequest request, HttpServletResponse response, String action)
         throws SQLException, IOException, ParseException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
@@ -78,9 +78,15 @@ public class UserServlet extends HttpServlet {
         Date date1 = sd.parse(date_of_birth);
         java.sql.Date sqlDate = new java.sql.Date(date1.getTime());
 
-        User new_user = new User(name, surname, sqlDate, fiscal_code, false, username, password);
+        if (action == "insert") {
+            User new_user = new User(name, surname, sqlDate, fiscal_code, false, username, password);
+            userDao.saveUser(new_user);
+        } else if (action == "update") {
+            int idUser = Integer.parseInt(request.getParameter("id"));
+            User current_user = new User(idUser, name, surname, sqlDate, fiscal_code, false, username, password);
+            userDao.updateUser(current_user);
+        }
 
-        userDao.saveUser(new_user);
         response.sendRedirect("user");
     }
 
@@ -91,28 +97,6 @@ public class UserServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
         request.setAttribute("user", current_user);
         dispatcher.forward(request, response);
-    }
-
-    private void updateUser(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException, ParseException {
-        int idUser = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String date_of_birth = request.getParameter("date_of_birth");
-        String fiscal_code = request.getParameter("fiscal_code");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        fiscal_code = fiscal_code.toUpperCase();
-        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
-        Date date1 = sd.parse(date_of_birth);
-        java.sql.Date sqlDate = new java.sql.Date(date1.getTime());
-
-        User current_user = new User(idUser, name, surname, sqlDate, fiscal_code, false, username, password);
-
-        userDao.updateUser(current_user);
-        response.sendRedirect("user");
-
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)

@@ -28,7 +28,7 @@ public class CategoryServlet extends HttpServlet {
         try {
             switch (path) {
                 case "/newCategory":
-                    System.out.println("newCat");
+                    //ripartire da qui
                     break;
                 default:
                     listCategories(request, response);
