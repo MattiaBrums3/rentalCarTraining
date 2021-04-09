@@ -8,10 +8,10 @@ import com.example.rental_car.entity.Vehicle;
 public class TestVehicle {
     public static void main (String[] args) {
         CategoryDao cd = new CategoryDao();
-        Category c = cd.getCategoryById(2);
+        Category c = cd.getCategoryById(1);
         VehicleDao vd = new VehicleDao();
 
-        Vehicle v = new Vehicle("Europolis", "Cacciamali", "AA123AA", 1996, c);
+        Vehicle v = new Vehicle("488 Pista", "Ferrari", "GA234EF", 2020, c);
         vd.saveVehicle(v);
     }
 }

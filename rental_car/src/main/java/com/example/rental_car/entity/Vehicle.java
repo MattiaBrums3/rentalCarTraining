@@ -1,6 +1,7 @@
 package com.example.rental_car.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicles")
@@ -26,6 +27,9 @@ public class Vehicle {
     @JoinColumn(name="idCategory", nullable=false)
     private Category category;
 
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    List<Rental> rentals;
+
     public Vehicle() {}
 
     public Vehicle(String model, String manufacturer, String license_plate, int year_of_registration, Category category) {
@@ -36,12 +40,13 @@ public class Vehicle {
         this.category = category;
     }
 
-    public Vehicle(int id, String model, String manufacturer, String license_plate, int year_of_registration) {
+    public Vehicle(int id, String model, String manufacturer, String license_plate, int year_of_registration, Category category) {
         this.id = id;
         this.model = model;
         this.manufacturer = manufacturer;
         this.license_plate = license_plate;
         this.year_of_registration = year_of_registration;
+        this.category = category;
     }
 
     public int getId() {
@@ -87,6 +92,10 @@ public class Vehicle {
     public Category getCategory() { return category; }
 
     public void setCategory(Category category) { this.category = category; }
+
+    public List<Rental> getRentals() { return rentals; }
+
+    public void setRentals(List<Rental> rentals) { this.rentals = rentals; }
 
     @Override
     public String toString() {

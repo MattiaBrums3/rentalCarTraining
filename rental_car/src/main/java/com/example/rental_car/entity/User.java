@@ -1,12 +1,8 @@
 package com.example.rental_car.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -36,6 +32,9 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    List<Rental> rentals;
 
     public User() {}
 
@@ -123,6 +122,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<Rental> getRentals() { return rentals; }
+
+    public void setRentals(List<Rental> rentals) { this.rentals = rentals; }
 
     @Override
     public String toString() {

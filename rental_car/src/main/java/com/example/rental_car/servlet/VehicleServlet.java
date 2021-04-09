@@ -46,7 +46,7 @@ public class VehicleServlet extends HttpServlet {
                     insertEditVehicle(request, response, "update");
                     break;
                 case "/deleteVehicle":
-                    //deleteVehicle(request, response);
+                    deleteVehicle(request, response);
                     break;
                 default:
                     listVehicles(request, response);
@@ -74,19 +74,28 @@ public class VehicleServlet extends HttpServlet {
             throws SQLException, IOException {
         String model = request.getParameter("model");
         String manufacturer = request.getParameter("manufacturer");
-        String license_plate = request.getParameter("license_plate");
-        int year_of_registration = Integer.parseInt(request.getParameter("year_of_registration"));
-
+        String license_plate = request.getParameter("licensePlate");
+        int year_of_registration = Integer.parseInt(request.getParameter("yearOfRegistration"));
+        int idCategory = Integer.parseInt(request.getParameter("category"));
+        Category category = categoryDao.getCategoryById(idCategory);
+        license_plate = license_plate.toUpperCase();
 
         if (action == "insert") {
-            //Vehicle new_vehicle = new Vehicle(model, manufacturer, license_plate, year_of_registration);
-            //vehicleDao.saveVehicle(new_vehicle);
+            Vehicle new_vehicle = new Vehicle(model, manufacturer, license_plate, year_of_registration, category);
+            vehicleDao.saveVehicle(new_vehicle);
         } else if (action == "update") {
             int idVehicle = Integer.parseInt(request.getParameter("id"));
-            Vehicle current_vehicle = new Vehicle(idVehicle, model, manufacturer, license_plate, year_of_registration);
+            Vehicle current_vehicle = new Vehicle(idVehicle, model, manufacturer, license_plate, year_of_registration, category);
             vehicleDao.updateVehicle(current_vehicle);
         }
 
+        response.sendRedirect("vehicle");
+    }
+
+    private void deleteVehicle(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        int idVehicle = Integer.parseInt(request.getParameter("id"));
+        vehicleDao.deleteVehicle(idVehicle);
         response.sendRedirect("vehicle");
     }
 

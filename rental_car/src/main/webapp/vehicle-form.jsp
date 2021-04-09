@@ -47,23 +47,35 @@
                 <tr>
                     <th>Targa: </th>
                     <td>
-                        <input type="text" name="licensePlate" value="<c:out value='${vehicle.licensePlate}' />" required />
+                        <input type="text" name="licensePlate" maxlength="7" minlenght="7" style="text-transform:uppercase" value="<c:out value='${vehicle.licensePlate}' />" required />
                     </td>
                 </tr>
                 <tr>
                     <th>Anno Immatricolazione: </th>
                     <td>
-                        <input type="text" name="yearOfRegistration" value="<c:out value='${vehicle.yearOfRegistration}' />" required />
+                        <input type="number" name="yearOfRegistration" maxlength="4" minlenght="4" style="text-transform:uppercase" value="<c:out value='${vehicle.yearOfRegistration}' />" required />
                     </td>
                 </tr>
                 <tr>
                     <th>Categoria: </th>
                     <td>
                         <select name="category">
-                            <option selected>Seleziona...</option>
-                            <c:forEach var="category" items="${listCategories}">
-                                <option value="${category.id}">${category.typology}</option>
-                            </c:forEach>
+                            <c:if test="${vehicle == null}">
+                                <option selected>Seleziona...</option>
+                                <c:forEach var="category" items="${listCategories}">
+                                    <option value="${category.id}">${category.typology}</option>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${vehicle != null}">
+                                <c:forEach var="category" items="${listCategories}">
+                                    <c:if test="${category.id == vehicle.category.id}">
+                                        <option selected value="${category.id}">${category.typology}</option>
+                                    </c:if>
+                                    <c:if test="${category.id != vehicle.category.id}">
+                                        <option value="${category.id}">${category.typology}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
                         </select>
                     </td>
                 </tr>

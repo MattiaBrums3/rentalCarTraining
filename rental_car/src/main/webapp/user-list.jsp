@@ -7,7 +7,7 @@
         <table border="1" cellpadding="5">
             <caption><h2>Lista Utenti</h2></caption>
             <tr>
-                <th>idUser</th>
+                <th>idUtente</th>
                 <th>Nome</th>
                 <th>Cognome</th>
                 <th>Data di Nascita</th>
@@ -28,7 +28,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="deleteUser?id=<c:out value='${user.id}' />">Elimina</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#">Prenotazioni</a>
+                        <a href="rentals?id=<c:out value='${user.id}' />">Prenotazioni</a>
                     </td>
                 </tr>
             </c:forEach>

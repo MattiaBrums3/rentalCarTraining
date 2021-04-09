@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-@Table(name = "cateogries")
+@Table(name = "categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
