@@ -1,5 +1,8 @@
 package com.example.rental_car.servlet;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,7 +17,7 @@ import com.example.rental_car.entity.User;
 import com.example.rental_car.entity.Vehicle;
 import com.example.rental_car.entity.Rental;
 
-@WebServlet(name = "RentalServlet", urlPatterns = {"/rental", "/rentals", "/newRental", "/insertRental", "/editRental", "/updateRental", "/deleteRental"})
+@WebServlet(name = "RentalServlet", urlPatterns = {"/rental", "/rentals", "/newRental", "/insertRental", "/editRental", "/updateRental", "/approveRental", "/deleteRental"})
 public class RentalServlet extends HttpServlet {
     private VehicleDao vehicleDao;
     private UserDao userDao;
@@ -49,6 +52,9 @@ public class RentalServlet extends HttpServlet {
                 case "/updateRental":
                     //insertEditRental(request, response, "update");
                     break;
+                case "/approveRental":
+                    insertEditRental(request, response, "approve");
+                    break;
                 case "/deleteRental":
                     //deleteRental(request, response);
                     break;
@@ -59,9 +65,38 @@ public class RentalServlet extends HttpServlet {
                     listRentals(request, response);
                     break;
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | ParseException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void insertEditRental(HttpServletRequest request, HttpServletResponse response, String action)
+            throws SQLException, IOException, ParseException {
+        if (action == "approve") {
+            int idRental = Integer.parseInt(request.getParameter("id"));
+            Boolean approved = Boolean.parseBoolean(request.getParameter("approved"));
+
+            Rental rental = rentalDao.getRentalById(idRental);
+
+            if (approved == true) {
+                Rental updated_rental = new Rental(rental.getId(), rental.getUser(), rental.getVehicle(), rental.getDateOfStart(), rental.getDateOfEnd(), true);
+                rentalDao.updateRental(updated_rental);
+            } else {
+                rentalDao.deleteRental(idRental);
+            }
+        } else {
+            if (action == "insert") {
+                //parametri body
+                Rental new_rental = new Rental();
+                rentalDao.saveRental(new_rental);
+            } else if (action == "update") {
+                int idRental = Integer.parseInt(request.getParameter("id"));
+                Rental current_rental = new Rental();
+                rentalDao.updateRental(current_rental);
+            }
+        }
+
+        response.sendRedirect("user");
     }
 
     private void listUserRentals(HttpServletRequest request, HttpServletResponse response)

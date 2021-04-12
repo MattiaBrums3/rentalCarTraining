@@ -25,7 +25,7 @@ public class TestRental {
         Date date_end = sd.parse(s2);
 
         RentalDao rd = new RentalDao();
-        Rental r = new Rental(u, v, date_start, date_end);
+        Rental r = new Rental(u, v, date_start, date_end, false);
         rd.saveRental(r);
     }
 }

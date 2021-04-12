@@ -96,10 +96,16 @@ public class UserServlet extends HttpServlet {
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+            throws SQLException, IOException, ServletException {
         int idUser = Integer.parseInt(request.getParameter("id"));
         userDao.deleteUser(idUser);
+        request.setAttribute("message", "Utente eliminato con successo.");
+
+        HttpSession session = request.getSession();
+        String msg="Utente eliminato con successo.";
+        session.setAttribute("msg", msg);
         response.sendRedirect("user");
+        //listUsers(request, response);
     }
 
     private void listUsers(HttpServletRequest request, HttpServletResponse response)

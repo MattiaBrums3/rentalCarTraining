@@ -27,7 +27,7 @@ public class Vehicle {
     @JoinColumn(name="idCategory", nullable=false)
     private Category category;
 
-    @OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER)
     List<Rental> rentals;
 
     public Vehicle() {}

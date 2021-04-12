@@ -25,13 +25,26 @@ public class Rental {
     @Column(name = "dateOfEnd")
     private Date date_of_end;
 
+    @Column(name = "approved")
+    private Boolean approved;
+
     public Rental() {}
 
-    public Rental(User user, Vehicle vehicle, Date date_of_start, Date date_of_end) {
+    public Rental(User user, Vehicle vehicle, Date date_of_start, Date date_of_end, Boolean approved) {
         this.user = user;
         this.vehicle = vehicle;
         this.date_of_start = date_of_start;
         this.date_of_end = date_of_end;
+        this.approved = approved;
+    }
+
+    public Rental(int id, User user, Vehicle vehicle, Date date_of_start, Date date_of_end, Boolean approved) {
+        this.id = id;
+        this.user = user;
+        this.vehicle = vehicle;
+        this.date_of_start = date_of_start;
+        this.date_of_end = date_of_end;
+        this.approved = approved;
     }
 
     public int getId() { return id; }
@@ -69,6 +82,10 @@ public class Rental {
     public void setDateOfEnd(Date date_of_end) {
         this.date_of_end = date_of_end;
     }
+
+    public Boolean getApproved() { return approved; }
+
+    public void setApproved(Boolean approved) { this.approved = approved; }
 
     @Override
     public String toString() {
