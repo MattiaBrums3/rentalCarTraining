@@ -14,7 +14,7 @@
             <option value="fiscalCode">Codice Fiscale</option>
             <option value="username">Username</option>
         </select>
-        <input type="text" id="searchUsers" onkeyup="searchFunction()" value="" placeholder="Ricerca..." />
+        <input type="text" id="searchUsers" onkeyup="searchFunction()" placeholder="Ricerca..." />
         <table id="usersTable" border="1" cellpadding="5">
             <thead>
                 <th>idUtente</th>
