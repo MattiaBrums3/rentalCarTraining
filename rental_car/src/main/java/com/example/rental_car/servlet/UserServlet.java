@@ -105,12 +105,11 @@ public class UserServlet extends HttpServlet {
         String msg="Utente eliminato con successo.";
         session.setAttribute("msg", msg);
         response.sendRedirect("user");
-        //listUsers(request, response);
     }
 
     private void listUsers(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        List<User> listUsers = userDao.getAllUsers();
+        List<User> listUsers = userDao.getCustomerUsers();
         request.setAttribute("listUsers", listUsers);
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin-homepage.jsp");
         dispatcher.forward(request, response);

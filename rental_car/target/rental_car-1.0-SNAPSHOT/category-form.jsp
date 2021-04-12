@@ -8,48 +8,52 @@
     <c:if test="${category == null}">
         <title>Nuova Categoria</title>
     </c:if>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/css-form.css" type="text/css" />
 </head>
 <body>
-<jsp:include page="header.jsp"/>
-<div align="center">
-    <c:if test="${category != null}">
-        <form action="updateCategory" method="post">
-    </c:if>
-    <c:if test="${category == null}">
-        <form action="insertCategory" method="post">
-    </c:if>
-            <table border="1" cellpadding="5">
-                <caption>
-                    <h2>
-                        <c:if test="${category != null}">
-                            Modifica Categoria
-                        </c:if>
-                        <c:if test="${category == null}">
-                            Nuova Categoria
-                        </c:if>
-                    </h2>
-                </caption>
+    <jsp:include page="header.jsp"/>
+    <div class="register">
+        <div class="row">
+            <div class="col-sm register-right">
                 <c:if test="${category != null}">
-                    <input type="hidden" name="id" value="<c:out value='${category.id}' />" />
+                    <form action="updateCategory" method="post">
                 </c:if>
-                <tr>
-                    <th>Tipologia: </th>
-                    <td>
-                        <input type="text" name="typology" value="<c:out value='${category.typology}' />" required />
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
+                <c:if test="${category == null}">
+                    <form action="insertCategory" method="post">
+                </c:if>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <c:if test="${category != null}">
-                            <input type="submit" value="Modifica" />
+                            <h3 class="register-heading">Modifica Categoria</h3>
                         </c:if>
                         <c:if test="${category == null}">
-                            <input type="submit" value="Inserisci" />
+                            <h3 class="register-heading">Nuova Categoria</h3>
                         </c:if>
-                    </td>
-                </tr>
-            </table>
-        </form>
-</div>
+                        <c:if test="${category != null}">
+                            <input type="hidden" name="id" value="<c:out value='${category.id}' />" />
+                        </c:if>
+                        <div class="row register-form">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="typology" class="form-control" value="<c:out value='${category.typology}' />" placeholder="TIPOLOGIA *" required />
+                                </div>
+                                <c:if test="${category != null}">
+                                    <input type="submit" value="Modifica" class="btnRegister" />
+                                </c:if>
+                                <c:if test="${category == null}">
+                                    <input type="submit" value="Inserisci" class="btnRegister" />
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

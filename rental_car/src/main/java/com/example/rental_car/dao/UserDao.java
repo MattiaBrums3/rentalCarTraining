@@ -78,6 +78,26 @@ public class UserDao {
         return user;
     }
 
+    public List<User> getCustomerUsers() {
+        Transaction transaction = null;
+        List<User> listOfUsers = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            listOfUsers = session.createQuery("FROM User WHERE superUser = 0").getResultList();
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return listOfUsers;
+    }
+
     public List<User> getAllUsers() {
         Transaction transaction = null;
         List<User> listOfUsers = null;
