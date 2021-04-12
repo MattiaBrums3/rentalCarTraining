@@ -4,9 +4,19 @@
 <html>
 <body>
     <div align="center">
-        <table border="1" cellpadding="5">
-            <caption><h2>Lista Utenti</h2></caption>
-            <tr>
+        <h2>Lista Utenti</h2>
+        Ricerca per:
+        <select id="searchField" name="searchField">
+            <option value="id" selected>idUtente</option>
+            <option value="name">Nome</option>
+            <option value="surname">Cognome</option>
+            <option value="birthDate">Data di Nascita</option>
+            <option value="fiscalCode">Codice Fiscale</option>
+            <option value="username">Username</option>
+        </select>
+        <input type="text" id="searchUsers" onkeyup="searchFunction()" value="" placeholder="Ricerca..." />
+        <table id="usersTable" border="1" cellpadding="5">
+            <thead>
                 <th>idUtente</th>
                 <th>Nome</th>
                 <th>Cognome</th>
@@ -14,7 +24,7 @@
                 <th>Codice Fiscale</th>
                 <th>Username</th>
                 <th><a href="newUser">Nuovo Utente</a></th>
-            </tr>
+            </thead>
             <c:forEach var="user" items="${listUsers}">
                 <tr>
                     <td><c:out value="${user.id}" /></td>
@@ -34,5 +44,39 @@
             </c:forEach>
         </table>
     </div>
+
+    <script>
+        function searchFunction() {
+            var input, field, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchUsers");
+            field = document.getElementById("searchField").value;
+            filter = input.value.toUpperCase();
+            table = document.getElementById("usersTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                if (field == "id"){
+                    td = tr[i].getElementsByTagName("td")[0];
+                } else if (field == "name") {
+                    td = tr[i].getElementsByTagName("td")[1];
+                } else if (field == "surname") {
+                    td = tr[i].getElementsByTagName("td")[2];
+                } else if (field == "birthDate") {
+                    td = tr[i].getElementsByTagName("td")[3];
+                } else if (field == "fiscalCode") {
+                    td = tr[i].getElementsByTagName("td")[4];
+                } else if (field == "username") {
+                    td = tr[i].getElementsByTagName("td")[5];
+                }
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
