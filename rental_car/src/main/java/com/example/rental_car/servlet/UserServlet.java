@@ -97,12 +97,19 @@ public class UserServlet extends HttpServlet {
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        int idUser = Integer.parseInt(request.getParameter("id"));
-        userDao.deleteUser(idUser);
-        request.setAttribute("message", "Utente eliminato con successo.");
-
         HttpSession session = request.getSession();
-        String msg="Utente eliminato con successo.";
+        String msg = "";
+        int idUser = Integer.parseInt(request.getParameter("id"));
+
+        User user = userDao.getUserById(idUser);
+
+        if (user.getRentals().isEmpty()) {
+            userDao.deleteUser(idUser);
+            msg="Utente eliminato con successo.";
+        } else {
+            msg = "Impossibile eliminare. Utente con prenotazioni approvate o in fase di approvazione.";
+        }
+
         session.setAttribute("msg", msg);
         response.sendRedirect("user");
     }

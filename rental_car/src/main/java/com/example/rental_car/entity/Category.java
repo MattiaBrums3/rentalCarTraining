@@ -1,12 +1,6 @@
 package com.example.rental_car.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -20,7 +14,7 @@ public class Category {
     @Column(name = "typology")
     private String typology;
 
-    @OneToMany(mappedBy="category")
+    @OneToMany(mappedBy="category", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private List<Vehicle> vehicles;
 
     public Category() {}
@@ -32,6 +26,12 @@ public class Category {
     public Category (int id, String typology) {
         this.id = id;
         this.typology = typology;
+    }
+
+    public Category(int id, String typology, List<Vehicle> vehicles) {
+        this.id = id;
+        this.typology = typology;
+        this.vehicles = vehicles;
     }
 
     public int getId() {
@@ -53,6 +53,10 @@ public class Category {
     public List<Vehicle> getVehicles() { return vehicles; }
 
     public void setVehicles(List<Vehicle> vehicles) { this.vehicles = vehicles; }
+
+    public void addVehicle(Vehicle vehicle) {
+        vehicles.add(vehicle);
+    }
 
     @Override
     public String toString() {

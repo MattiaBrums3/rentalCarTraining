@@ -4,21 +4,28 @@
 <html>
 <head>
     <title>Admin Homepage</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 <body>
     <jsp:include page="header.jsp"/>
-    <div align="center">
-        <h1>Admin Homepage</h1>
-        <h3>
-            <a href="category">Categorie</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="vehicle">Veicoli</a>
-
-        </h3>
+    <div class="register">
+        <div class="row">
+            <div class="col-sm register-right">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h1 class="register-heading">Admin Homepage</h1>
+                        <div class="row register-form d-flex justify-content-center">
+                            <div class="col-md-6">
+                                    <a href="category"><input type="button" class="btnAdminMenu" value="Categorie" /></a>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <a href="vehicle"><input type="button" class="btnAdminMenu" value="Veicoli" /></a>
+                            </div>
+                        </div>
+                        <jsp:include page="user-list.jsp"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <jsp:include page="user-list.jsp"/>
 </body>
 <script type="text/javascript">
     var msg = "${sessionScope.msg}";
@@ -26,7 +33,5 @@
         alert(msg);
     }
 </script>
-<c:if test="${not empty sessionScope.msg}">
-    <c:remove var="msg" scope="session" />
-</c:if>
+<c:remove var="msg" />
 </html>

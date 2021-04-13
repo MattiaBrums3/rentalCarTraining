@@ -23,8 +23,8 @@ public class Vehicle {
     @Column(name = "yearOfRegistration")
     private int year_of_registration;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-    @JoinColumn(name="idCategory", nullable=false)
+    @ManyToOne
+    @JoinColumn(name="idCategory")
     private Category category;
 
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)

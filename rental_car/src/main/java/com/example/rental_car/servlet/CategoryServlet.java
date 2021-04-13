@@ -80,8 +80,20 @@ public class CategoryServlet extends HttpServlet {
 
     private void deleteCategory(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        HttpSession session = request.getSession();
+        String msg = "";
         int idCategory = Integer.parseInt(request.getParameter("id"));
-        categoryDao.deleteCategory(idCategory);
+
+        Category category = categoryDao.getCategoryById(idCategory);
+
+        if (category.getVehicles().isEmpty()) {
+            categoryDao.deleteCategory(idCategory);
+            msg = "Categoria eliminata con successo.";
+        } else {
+            msg = "Impossibile eliminare. Categoria utilizzata per uno o più veicoli.";
+        }
+
+        session.setAttribute("msg", msg);
         response.sendRedirect("category");
     }
 

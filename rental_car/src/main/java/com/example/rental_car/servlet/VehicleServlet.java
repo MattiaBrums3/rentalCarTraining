@@ -83,6 +83,9 @@ public class VehicleServlet extends HttpServlet {
         if (action == "insert") {
             Vehicle new_vehicle = new Vehicle(model, manufacturer, license_plate, year_of_registration, category);
             vehicleDao.saveVehicle(new_vehicle);
+            category.addVehicle(new_vehicle);
+            System.out.println("category:");
+            System.out.println(category.getVehicles());
         } else if (action == "update") {
             int idVehicle = Integer.parseInt(request.getParameter("id"));
             Vehicle current_vehicle = new Vehicle(idVehicle, model, manufacturer, license_plate, year_of_registration, category);
@@ -94,8 +97,20 @@ public class VehicleServlet extends HttpServlet {
 
     private void deleteVehicle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        HttpSession session = request.getSession();
+        String msg = "";
         int idVehicle = Integer.parseInt(request.getParameter("id"));
-        vehicleDao.deleteVehicle(idVehicle);
+
+        Vehicle vehicle = vehicleDao.getVehicleById(idVehicle);
+
+        if (vehicle.getRentals().isEmpty()){
+            vehicleDao.deleteVehicle(idVehicle);
+            msg="Veicolo eliminato con successo.";
+        } else {
+            msg = "Impossibile eliminare. Veicolo prenotato da qualche utente.";
+        }
+
+        session.setAttribute("msg", msg);
         response.sendRedirect("vehicle");
     }
 

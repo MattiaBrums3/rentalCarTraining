@@ -35,7 +35,7 @@
                         <c:if test="${category != null}">
                             <input type="hidden" name="id" value="<c:out value='${category.id}' />" />
                         </c:if>
-                        <div class="row register-form">
+                        <div class="row register-form d-flex justify-content-center">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="typology" class="form-control" value="<c:out value='${category.typology}' />" placeholder="TIPOLOGIA *" required />

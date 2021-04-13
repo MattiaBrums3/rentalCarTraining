@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <select name="category" class="form-control">
                                         <c:if test="${vehicle == null}">
-                                            <option selected>Seleziona...</option>
+                                            <option selected>CATEGORIA *</option>
                                             <c:forEach var="category" items="${listCategories}">
                                                 <option value="${category.id}">${category.typology}</option>
                                             </c:forEach>

@@ -60,6 +60,29 @@
     width: 50%;
     cursor: pointer;
 }
+
+.btnAdminMenu{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 46%;
+    cursor: pointer;
+}
+.btnTable{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btnRegister:hover, .btnAdminMenu:hover, .btnTable:hover {
+    background: #0080FF;
+}
 .register .nav-tabs{
     margin-top: 3%;
     border: none;
@@ -91,4 +114,22 @@
     margin-top: 8%;
     margin-bottom: -15%;
     color: #495057;
+}
+.register-subheading{
+    text-align: center;
+    margin-top: -4%;
+    margin-bottom: -17%;
+    color: #495057;
+}
+.searchField{
+    background: #0062cc;
+    color: #fff;
+}
+.searchField option{
+    background: #0080FF;
+    color: #fff;
+}
+.selectField selected{
+    background: #0062cc;
+    color: #fff;
 }
