@@ -80,6 +80,15 @@
     font-weight: 600;
     cursor: pointer;
 }
+.btnNavbar{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 10%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
 .btnRegister:hover, .btnAdminMenu:hover, .btnTable:hover {
     background: #0080FF;
 }

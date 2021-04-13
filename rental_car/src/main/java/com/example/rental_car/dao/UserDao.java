@@ -78,6 +78,32 @@ public class UserDao {
         return user;
     }
 
+    public User checkLogin(String username, String password) {
+        Transaction transaction = null;
+        List<User> users;
+        User user = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            users = session.createQuery("FROM User WHERE username= :username AND password= :password")
+                    .setParameter("username", username)
+                    .setParameter("password", password)
+                    .getResultList();
+
+            if (!users.isEmpty()) {
+                user = users.get(0);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public List<User> getCustomerUsers() {
         Transaction transaction = null;
         List<User> listOfUsers = null;

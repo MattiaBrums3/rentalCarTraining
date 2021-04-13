@@ -13,7 +13,7 @@ import java.util.Date;
 import com.example.rental_car.dao.UserDao;
 import com.example.rental_car.entity.User;
 
-@WebServlet(name = "UserServlet", urlPatterns = {"/user", "/newUser", "/insertUser", "/editUser", "/updateUser", "/deleteUser"})
+@WebServlet(name = "UserServlet", urlPatterns = {"/login", "/logout", "/user", "/newUser", "/insertUser", "/editUser", "/updateUser", "/deleteUser"})
 public class UserServlet extends HttpServlet {
     private UserDao userDao;
 
@@ -47,6 +47,12 @@ public class UserServlet extends HttpServlet {
                 case "/deleteUser":
                     deleteUser(request, response);
                     break;
+                case "/login":
+                    login(request, response);
+                    break;
+                case "/logout":
+                    logout(request, response);
+                    break;
                 default:
                     listUsers(request, response);
                     break;
@@ -56,6 +62,37 @@ public class UserServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private void login(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, ServletException, IOException {
+        HttpSession session = request.getSession();
+        String msg = "";
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        User user = userDao.checkLogin(username, password);
+
+        if (user == null) {
+            msg = "Username o password errati.";
+            session.setAttribute("msg", msg);
+            response.sendRedirect("index.jsp");
+        } else {
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("super", user.getSuperUser());
+            response.sendRedirect("user");
+        }
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        HttpSession session = request.getSession();
+
+        session.removeAttribute("username");
+        session.removeAttribute("super");
+        String msg = "A presto!";
+        session.setAttribute("msg", msg);
+        response.sendRedirect("index.jsp");
     }
 
     private void showUserForm(HttpServletRequest request, HttpServletResponse response, String action)
