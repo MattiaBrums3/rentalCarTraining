@@ -78,6 +78,7 @@ public class UserServlet extends HttpServlet {
             session.setAttribute("msg", msg);
             response.sendRedirect("index.jsp");
         } else {
+            session.setAttribute("id", user.getId());
             session.setAttribute("username", user.getUsername());
             session.setAttribute("super", user.getSuperUser());
             response.sendRedirect("user");
@@ -88,6 +89,7 @@ public class UserServlet extends HttpServlet {
             throws IOException {
         HttpSession session = request.getSession();
 
+        session.removeAttribute("id");
         session.removeAttribute("username");
         session.removeAttribute("super");
         String msg = "A presto!";
