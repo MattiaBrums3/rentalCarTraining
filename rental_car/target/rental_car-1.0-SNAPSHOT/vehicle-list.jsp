@@ -63,7 +63,12 @@
                                                             <a href="deleteVehicle?id=<c:out value='${vehicle.id}' />"><input type="button" class="btnTable" value="Elimina" /></a>
                                                         </c:if>
                                                         <c:if test="${sessionScope.superUser == false}">
+                                                            <c:if test="${user.getRentals().isEmpty()}">
                                                                 <a href="newRental"><input type="button" class="btnTable" value="Prenota" /></a>
+                                                            </c:if>
+                                                            <c:if test="${!user.getRentals().isEmpty()}">
+                                                                Hai già una prenotazione.
+                                                            </c:if>
                                                         </c:if>
                                                     </div>
                                                 </td>

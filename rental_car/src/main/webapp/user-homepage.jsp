@@ -34,7 +34,7 @@
                             <c:if test="${empty listRentals}">
                                 <div class="row register-form d-flex justify-content-center">
                                     <div class="col-md-6">
-                                        <h2 class="register-subheading">L'utente non ha effettuato prenotazioni.</h2>
+                                        <h2 class="register-subheading">Non hai effettuato prenotazioni.<br/>Clicca su "PARCO AUTO" per prenotare il tuo primo veicolo!</h2>
                                     </div>
                                 </div>
                             </c:if>
@@ -66,9 +66,11 @@
                                                 <th class="th-sm">Data di Fine</th>
                                                 <th class="th-sm">Stato</th>
                                                 <th class="th-sm">
-                                                    <div class="d-flex justify-content-center">
-                                                        <a href="newRental"><input type="button" class="btnTable" value="Nuova Prenotazione" /></a>
-                                                    </div>
+                                                    <c:if test="${user.getRentals().isEmpty()}">
+                                                        <div class="d-flex justify-content-center">
+                                                            <a href="newRental"><input type="button" class="btnTable" value="Nuova Prenotazione" /></a>
+                                                        </div>
+                                                    </c:if>
                                                 </th>
                                             </tr>
                                             </thead>

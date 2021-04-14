@@ -9,17 +9,21 @@ import java.sql.SQLException;
 
 import com.example.rental_car.dao.CategoryDao;
 import com.example.rental_car.dao.VehicleDao;
+import com.example.rental_car.dao.UserDao;
 import com.example.rental_car.entity.Category;
+import com.example.rental_car.entity.User;
 import com.example.rental_car.entity.Vehicle;
 
 @WebServlet(name = "VehicleServlet", urlPatterns = {"/vehicle", "/newVehicle", "/insertVehicle", "/editVehicle", "/updateVehicle", "/deleteVehicle"})
 public class VehicleServlet extends HttpServlet {
     private VehicleDao vehicleDao;
     private CategoryDao categoryDao;
+    private UserDao userDao;
 
     public void init() {
         vehicleDao = new VehicleDao();
         categoryDao = new CategoryDao();
+        userDao = new UserDao();
     }
 
     @Override
@@ -114,7 +118,10 @@ public class VehicleServlet extends HttpServlet {
 
     private void listVehicles(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
+        HttpSession session = request.getSession();
+        User user = userDao.getUserById((int)session.getAttribute("id"));
         List<Vehicle> listVehicles = vehicleDao.getAllVehicles();
+        request.setAttribute("user", user);
         request.setAttribute("listVehicles", listVehicles);
         RequestDispatcher dispatcher = request.getRequestDispatcher("vehicle-list.jsp");
         dispatcher.forward(request, response);
