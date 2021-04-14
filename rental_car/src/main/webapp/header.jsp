@@ -17,13 +17,13 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">HOMEPAGE<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="user">HOMEPAGE<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">PARCO AUTO</a>
+                    <a class="nav-link" href="vehicle">PARCO AUTO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">PROFILO UTENTE</a>
+                    <a class="nav-link" href="editUser?id=${sessionScope.id}">PROFILO UTENTE</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" action="logout" method="post">

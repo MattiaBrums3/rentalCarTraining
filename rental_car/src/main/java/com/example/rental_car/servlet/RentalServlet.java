@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import com.example.rental_car.dao.UserDao;
 import com.example.rental_car.dao.VehicleDao;
 import com.example.rental_car.dao.RentalDao;
+import com.example.rental_car.entity.Category;
 import com.example.rental_car.entity.User;
 import com.example.rental_car.entity.Vehicle;
 import com.example.rental_car.entity.Rental;
@@ -41,22 +42,22 @@ public class RentalServlet extends HttpServlet {
         try {
             switch (path) {
                 case "/newRental":
-                    //showRentalForm(request, response, "insert");
+                    showRentalForm(request, response, "insert");
                     break;
                 case "/insertRental":
-                    //insertEditRental(request, response, "insert");
+                    insertEditRental(request, response, "insert");
                     break;
                 case "/editRental":
-                    //showRentalForm(request, response, "update");
+                    showRentalForm(request, response, "update");
                     break;
                 case "/updateRental":
-                    //insertEditRental(request, response, "update");
+                    insertEditRental(request, response, "update");
                     break;
                 case "/approveRental":
                     insertEditRental(request, response, "approve");
                     break;
                 case "/deleteRental":
-                    //deleteRental(request, response);
+                    deleteRental(request, response);
                     break;
                 case "/rentals":
                     listUserRentals(request, response);
@@ -68,6 +69,19 @@ public class RentalServlet extends HttpServlet {
         } catch (SQLException | ParseException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void showRentalForm(HttpServletRequest request, HttpServletResponse response, String action)
+            throws ServletException, IOException {
+        if (action == "update") {
+            int idRental = Integer.parseInt(request.getParameter("id"));
+            Rental current_rental = rentalDao.getRentalById(idRental);
+            request.setAttribute("rental", current_rental);
+        }
+        List<Vehicle> listVehicles = vehicleDao.getAllVehicles();
+        request.setAttribute("listVehicles", listVehicles);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("rental-form.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void insertEditRental(HttpServletRequest request, HttpServletResponse response, String action)
@@ -85,17 +99,43 @@ public class RentalServlet extends HttpServlet {
                 rentalDao.deleteRental(idRental);
             }
         } else {
+            HttpSession session = request.getSession();
+            String date_of_start = request.getParameter("date_of_start");
+            String date_of_end = request.getParameter("date_of_end");
+            int idVehicle = Integer.parseInt(request.getParameter("vehicle"));
+
+            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+            Date date_s = sd.parse(date_of_start);
+            java.sql.Date sqlDate_s = new java.sql.Date(date_s.getTime());
+            Date date_e = sd.parse(date_of_end);
+            java.sql.Date sqlDate_e = new java.sql.Date(date_e.getTime());
+
+            User user = userDao.getUserById((int)session.getAttribute("id"));
+            Vehicle vehicle = vehicleDao.getVehicleById(idVehicle);
+
             if (action == "insert") {
-                //parametri body
-                Rental new_rental = new Rental();
+                Rental new_rental = new Rental(user, vehicle, sqlDate_s, sqlDate_e, false);
                 rentalDao.saveRental(new_rental);
             } else if (action == "update") {
                 int idRental = Integer.parseInt(request.getParameter("id"));
-                Rental current_rental = new Rental();
+                Rental current_rental = new Rental(idRental, user, vehicle, sqlDate_s, sqlDate_e, false);
                 rentalDao.updateRental(current_rental);
             }
         }
 
+        response.sendRedirect("user");
+    }
+
+    private void deleteRental(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        HttpSession session = request.getSession();
+        String msg = "";
+        int idRental = Integer.parseInt(request.getParameter("id"));
+
+        rentalDao.deleteRental(idRental);
+        msg="Prenotazione eliminata con successo.";
+
+        session.setAttribute("msg", msg);
         response.sendRedirect("user");
     }
 

@@ -38,9 +38,11 @@
                                         <th class="th-sm">Anno Immatr.</th>
                                         <th class="th-sm">Categoria</th>
                                         <th class="th-sm">
-                                            <div class="d-flex justify-content-center">
-                                                <a href="newVehicle"><input type="button" class="btnTable" value="Nuovo Veicolo" /></a>
-                                            </div>
+                                            <c:if test="${sessionScope.superUser == true}">
+                                                <div class="d-flex justify-content-center">
+                                                    <a href="newVehicle"><input type="button" class="btnTable" value="Nuovo Veicolo" /></a>
+                                                </div>
+                                            </c:if>
                                         </th>
                                     </tr>
                                     </thead>
@@ -55,9 +57,14 @@
                                                 <td><c:out value="${vehicle.category.typology}" /></td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href="editVehicle?id=<c:out value='${vehicle.id}' />"><input type="button" class="btnTable" value="Modifica" /></a>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <a href="deleteVehicle?id=<c:out value='${vehicle.id}' />"><input type="button" class="btnTable" value="Elimina" /></a>
+                                                        <c:if test="${sessionScope.superUser == true}">
+                                                            <a href="editVehicle?id=<c:out value='${vehicle.id}' />"><input type="button" class="btnTable" value="Modifica" /></a>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a href="deleteVehicle?id=<c:out value='${vehicle.id}' />"><input type="button" class="btnTable" value="Elimina" /></a>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.superUser == false}">
+                                                                <a href="newRental"><input type="button" class="btnTable" value="Prenota" /></a>
+                                                        </c:if>
                                                     </div>
                                                 </td>
                                             </tr>

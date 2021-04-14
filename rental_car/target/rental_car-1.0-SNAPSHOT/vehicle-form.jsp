@@ -39,13 +39,13 @@
                         <div class="row register-form">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="model" class="form-control" value="<c:out value='${vehicle.model}' />" placeholder="MODELLO *" required />
+                                    <input type="text" name="model" class="form-control" value="<c:out value='${vehicle.model}' />" placeholder="MODELLO *" title="Modello" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="licensePlate" class="form-control" maxlength="7" minlenght="7" style="text-transform:uppercase" value="<c:out value='${vehicle.licensePlate}' />" placeholder="TARGA *" required />
+                                    <input type="text" name="licensePlate" class="form-control" maxlength="7" minlenght="7" style="text-transform:uppercase" value="<c:out value='${vehicle.licensePlate}' />" title="Targa" placeholder="TARGA *" required />
                                 </div>
                                 <div class="form-group">
-                                    <select name="category" class="form-control">
+                                    <select name="category" class="form-control" title="Categoria">
                                         <c:if test="${vehicle == null}">
                                             <option selected>CATEGORIA *</option>
                                             <c:forEach var="category" items="${listCategories}">
@@ -67,10 +67,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="manufacturer" class="form-control" value="<c:out value='${vehicle.manufacturer}' />" placeholder="CASA PRODUTTRICE *" required />
+                                    <input type="text" name="manufacturer" class="form-control" value="<c:out value='${vehicle.manufacturer}' />" placeholder="CASA PRODUTTRICE *" title="Casa Produttrice" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="number" name="yearOfRegistration" class="form-control" maxlength="4" minlenght="4" style="text-transform:uppercase" value="<c:out value='${vehicle.yearOfRegistration}' />" placeholder="ANNO *" required />
+                                    <input type="number" name="yearOfRegistration" class="form-control" maxlength="4" minlenght="4" style="text-transform:uppercase" value="<c:out value='${vehicle.yearOfRegistration}' />" title="Anno di Registrazione" placeholder="ANNO *" required />
                                 </div>
                                 <c:if test="${vehicle != null}">
                                     <input type="submit" value="Modifica" class="btnRegister" />

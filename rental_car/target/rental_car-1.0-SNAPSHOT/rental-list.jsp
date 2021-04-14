@@ -25,7 +25,7 @@
                                         <option value="user">Utente</option>
                                         <option value="vehicle">Veicolo</option>
                                         <option value="dateStart">Data di Inizio</option>
-                                        <option value="dateEnd">Data di fine</option>
+                                        <option value="dateEnd">Data di Fine</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-12 p-0">

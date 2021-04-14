@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import com.example.rental_car.dao.UserDao;
+import com.example.rental_car.dao.RentalDao;
+import com.example.rental_car.entity.Rental;
 import com.example.rental_car.entity.User;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/login", "/logout", "/user", "/newUser", "/insertUser", "/editUser", "/updateUser", "/deleteUser"})
@@ -80,7 +82,7 @@ public class UserServlet extends HttpServlet {
         } else {
             session.setAttribute("id", user.getId());
             session.setAttribute("username", user.getUsername());
-            session.setAttribute("super", user.getSuperUser());
+            session.setAttribute("superUser", user.getSuperUser());
             response.sendRedirect("user");
         }
     }
@@ -155,9 +157,18 @@ public class UserServlet extends HttpServlet {
 
     private void listUsers(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        List<User> listUsers = userDao.getCustomerUsers();
-        request.setAttribute("listUsers", listUsers);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("admin-homepage.jsp");
+        HttpSession session = request.getSession();
+        RentalDao rentalDao = new RentalDao();
+
+        if ((boolean)session.getAttribute("superUser") == false) {
+            List<Rental> listRentals = rentalDao.getRentalByUserId((int)session.getAttribute("id"));
+            request.setAttribute("listRentals", listRentals);
+        } else {
+            List<User> listUsers = userDao.getCustomerUsers();
+            request.setAttribute("listUsers", listUsers);
+        }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user-homepage.jsp");
         dispatcher.forward(request, response);
     }
 }

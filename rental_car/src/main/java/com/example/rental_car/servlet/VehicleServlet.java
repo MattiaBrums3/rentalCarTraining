@@ -84,8 +84,6 @@ public class VehicleServlet extends HttpServlet {
             Vehicle new_vehicle = new Vehicle(model, manufacturer, license_plate, year_of_registration, category);
             vehicleDao.saveVehicle(new_vehicle);
             category.addVehicle(new_vehicle);
-            System.out.println("category:");
-            System.out.println(category.getVehicles());
         } else if (action == "update") {
             int idVehicle = Integer.parseInt(request.getParameter("id"));
             Vehicle current_vehicle = new Vehicle(idVehicle, model, manufacturer, license_plate, year_of_registration, category);

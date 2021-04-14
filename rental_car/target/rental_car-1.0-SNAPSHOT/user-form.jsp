@@ -40,24 +40,24 @@
                         <div class="row register-form">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="name" class="form-control" value="<c:out value='${user.name}' />" placeholder="NOME *" required />
+                                    <input type="text" name="name" class="form-control" value="<c:out value='${user.name}' />" placeholder="NOME *" title="Nome" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="date" name="date_of_birth" class="form-control" value="<fmt:formatDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd" />" placeholder="DATA DI NASCITA *" required />
+                                    <input type="text" name="date_of_birth" class="form-control" value="<fmt:formatDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd" />" placeholder="DATA DI NASCITA *" onfocus="(this.type='date')" title="Data di Nascita" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="username" class="form-control" value="<c:out value='${user.username}' />" placeholder="USERNAME *" required />
+                                    <input type="text" name="username" class="form-control" value="<c:out value='${user.username}' />" placeholder="USERNAME *" title="Username" required />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="surname" class="form-control" value="<c:out value='${user.surname}' />" placeholder="COGNOME *" required />
+                                    <input type="text" name="surname" class="form-control" value="<c:out value='${user.surname}' />" placeholder="COGNOME *" title="Cognome" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="fiscal_code" class="form-control" maxlength="16" minlenght="16" style="text-transform:uppercase" value="<c:out value='${user.fiscalCode}' />" placeholder="Codice Fiscale *" required />
+                                    <input type="text" name="fiscal_code" class="form-control" maxlength="16" minlenght="16" style="text-transform:uppercase" value="<c:out value='${user.fiscalCode}' />" placeholder="Codice Fiscale *" title="Codice Fiscale" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" class="form-control" value="<c:out value='${user.password}' />" placeholder="PASSWORD *" required />
+                                    <input type="password" name="password" class="form-control" value="<c:out value='${user.password}' />" placeholder="PASSWORD *" title="Password" required />
                                 </div>
                                 <c:if test="${user != null}">
                                     <input type="submit" value="Modifica" class="btnRegister" />
