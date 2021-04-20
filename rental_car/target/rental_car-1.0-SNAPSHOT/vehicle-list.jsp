@@ -63,11 +63,23 @@
                                                             <a href="deleteVehicle?id=<c:out value='${vehicle.id}' />"><input type="button" class="btnTable" value="Elimina" /></a>
                                                         </c:if>
                                                         <c:if test="${sessionScope.superUser == false}">
-                                                            <c:if test="${user.getRentals().isEmpty()}">
-                                                                <a href="newRental"><input type="button" class="btnTable" value="Prenota" /></a>
+                                                            <c:set var="vehicleAlreadyRented" value="false" />
+                                                            <c:forEach var="v_rental" items="${vehicle.getRentals()}">
+                                                                <c:forEach var="rental" items="${listRentals}">
+                                                                    <c:if test="${v_rental.id == rental.id}">
+                                                                        <c:set var="vehicleAlreadyRented" value="true" />
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </c:forEach>
+                                                            <c:if test="${user.getRentals().isEmpty() && vehicleAlreadyRented == false}">
+                                                                <c:set var="emptyRentals" value="true" />
+                                                                <a href="newRental?idV=<c:out value='${vehicle.id}' />"><input type="button" class="btnTable" value="Prenota" /></a>
                                                             </c:if>
-                                                            <c:if test="${!user.getRentals().isEmpty()}">
+                                                            <c:if test="${!user.getRentals().isEmpty() && vehicleAlreadyRented == false}">
                                                                 Hai già una prenotazione.
+                                                            </c:if>
+                                                            <c:if test="${vehicleAlreadyRented == true}">
+                                                                Veicolo già prenotato.
                                                             </c:if>
                                                         </c:if>
                                                     </div>

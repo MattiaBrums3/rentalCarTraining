@@ -78,6 +78,11 @@ public class RentalServlet extends HttpServlet {
             Rental current_rental = rentalDao.getRentalById(idRental);
             request.setAttribute("rental", current_rental);
         }
+
+        int idVehicle = Integer.parseInt(request.getParameter("idV"));
+        Vehicle vehicle = vehicleDao.getVehicleById(idVehicle);
+        request.setAttribute("vehicle", vehicle);
+
         List<Vehicle> listVehicles = vehicleDao.getAllVehicles();
         request.setAttribute("listVehicles", listVehicles);
         RequestDispatcher dispatcher = request.getRequestDispatcher("rental-form.jsp");
@@ -100,6 +105,7 @@ public class RentalServlet extends HttpServlet {
             }
         } else {
             HttpSession session = request.getSession();
+            String msg = "";
             String date_of_start = request.getParameter("date_of_start");
             String date_of_end = request.getParameter("date_of_end");
             int idVehicle = Integer.parseInt(request.getParameter("vehicle"));
@@ -109,6 +115,15 @@ public class RentalServlet extends HttpServlet {
             java.sql.Date sqlDate_s = new java.sql.Date(date_s.getTime());
             Date date_e = sd.parse(date_of_end);
             java.sql.Date sqlDate_e = new java.sql.Date(date_e.getTime());
+            System.out.println("prova1");
+            if (sqlDate_s.getTime() > sqlDate_e.getTime()) {
+                msg="Data di Inizio maggiore di Data di Fine.";
+                System.out.println("prova2");
+
+                session.setAttribute("msg", msg);
+                response.sendRedirect("user");
+                return;
+            }
 
             User user = userDao.getUserById((int)session.getAttribute("id"));
             Vehicle vehicle = vehicleDao.getVehicleById(idVehicle);

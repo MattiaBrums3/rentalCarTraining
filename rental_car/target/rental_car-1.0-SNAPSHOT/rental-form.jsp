@@ -41,22 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <select name="vehicle" class="form-control" title="Veicolo">
-                                            <c:if test="${rental == null}">
-                                                <option selected>VEICOLO *</option>
-                                                <c:forEach var="vehicle" items="${listVehicles}">
-                                                    <option value="${vehicle.id}">${vehicle.model}</option>
-                                                </c:forEach>
-                                            </c:if>
-                                            <c:if test="${rental != null}">
-                                                <c:forEach var="vehicle" items="${listVehicles}">
-                                                    <c:if test="${vehicle.id == rental.vehicle.id}">
-                                                        <option selected value="${vehicle.id}">${vehicle.model}</option>
-                                                    </c:if>
-                                                    <c:if test="${vehicle.id != rental.vehicle.id}">
-                                                        <option value="${vehicle.id}">${vehicle.model}</option>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </c:if>
+                                            <option value="${vehicle.id}" selected>${vehicle.model}</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

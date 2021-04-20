@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import com.example.rental_car.dao.CategoryDao;
+import com.example.rental_car.dao.RentalDao;
 import com.example.rental_car.dao.VehicleDao;
 import com.example.rental_car.dao.UserDao;
 import com.example.rental_car.entity.Category;
+import com.example.rental_car.entity.Rental;
 import com.example.rental_car.entity.User;
 import com.example.rental_car.entity.Vehicle;
 
@@ -19,11 +21,13 @@ public class VehicleServlet extends HttpServlet {
     private VehicleDao vehicleDao;
     private CategoryDao categoryDao;
     private UserDao userDao;
+    private RentalDao rentalDao;
 
     public void init() {
         vehicleDao = new VehicleDao();
         categoryDao = new CategoryDao();
         userDao = new UserDao();
+        rentalDao = new RentalDao();
     }
 
     @Override
@@ -121,8 +125,10 @@ public class VehicleServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User user = userDao.getUserById((int)session.getAttribute("id"));
         List<Vehicle> listVehicles = vehicleDao.getAllVehicles();
+        List<Rental> listRentals = rentalDao.getAllRentals();
         request.setAttribute("user", user);
         request.setAttribute("listVehicles", listVehicles);
+        request.setAttribute("listRentals", listRentals);
         RequestDispatcher dispatcher = request.getRequestDispatcher("vehicle-list.jsp");
         dispatcher.forward(request, response);
     }
